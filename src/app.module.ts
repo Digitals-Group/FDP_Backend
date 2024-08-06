@@ -8,7 +8,6 @@ import { BannerModule } from './modules/banner/banner.module';
 import { BannerModule } from './modules/banner/banner.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
-import { BannerModule } from './modules/banner/banner.module';
 
 @Module({
   imports: [
