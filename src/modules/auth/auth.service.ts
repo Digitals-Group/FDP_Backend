@@ -1,3 +1,4 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -9,8 +10,8 @@ import {
 } from 'src/interfaces/auth.interface';
 import { generateOtpCode } from 'src/utils';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { SendSmsDto, VerifyOtpDto } from '../user/dto/user.dto';
 import { UserService } from '../user/user.service';
+import { SendMailDto, SendSmsDto, VerifyOtpDto } from './auth.dto';
 import { JwtPayload } from './jwt.strategy';
 
 @Injectable()
@@ -20,6 +21,7 @@ export class AuthService {
     private readonly usersService: UserService,
     private readonly httpService: HttpService,
     @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
+    private readonly mailerService: MailerService,
   ) {}
 
   async register(userDto: CreateUserDto) {
@@ -43,6 +45,29 @@ export class AuthService {
       throw new HttpException('INVALID_TOKEN', HttpStatus.UNAUTHORIZED);
     }
     return user;
+  }
+
+  async sendMail({ email }: SendMailDto) {
+    const otpCode = generateOtpCode(6);
+    const message = `Your login code is ${otpCode}. This otp will only be valid for the next 5 minutes`;
+
+    try {
+      await this.redisClient.set(email, otpCode, 'EX', 300);
+
+      this.mailerService.sendMail({
+        from: 'ilyosbeksheraliyev838@gmail.com',
+        to: email,
+        subject: `WIUTgroup Authentication - Your login code is ${otpCode}`,
+        text: message,
+      });
+
+      return { message: 'OTP sent successfully' };
+    } catch (error) {
+      throw new HttpException(
+        'Error sending Email',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async sendSms({ phone }: SendSmsDto) {
