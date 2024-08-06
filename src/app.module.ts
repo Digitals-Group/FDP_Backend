@@ -8,6 +8,7 @@ import { ProductCategoryModule } from './modules/product-category/product-catego
 import { BranchModule } from './modules/branch/branch.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
+import { DeliveryPriceModule } from './modules/delivery-price/delivery-price.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './modules/user/user.module';
     MailerModule,
     ProductCategoryModule,
     BranchModule,
+    DeliveryPriceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

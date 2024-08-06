@@ -65,3 +65,10 @@ model Branch {
   updatedAt    DateTime @updatedAt
 }
 
+model DeliveryPrice {
+  id           String   @id @default(uuid())
+  price        Int
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
