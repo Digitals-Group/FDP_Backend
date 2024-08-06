@@ -28,6 +28,7 @@ enum Role {
   ROOT
 }
 
+
 model ProductCategory{
   id            String    @id               @default(uuid())
   name          String    @unique
@@ -52,3 +53,15 @@ model Product {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
+
+model Branch {
+  id           String   @id @default(uuid())
+  name         String   @unique()
+  image        String
+  location     String
+  workingHours String
+  phoneNumber  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
