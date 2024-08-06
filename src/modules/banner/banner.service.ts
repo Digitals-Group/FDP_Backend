@@ -10,10 +10,10 @@ export class BannerService {
     return this.prisma.banner.create(createBannerDto);
   }
 
-  findAll(body: Prisma.BannerFindManyArgs) {
+  async findAll(body: Prisma.BannerFindManyArgs) {
     return {
-      data: this.prisma.banner.findMany(body),
-      count: this.prisma.banner.count(),
+      data: await this.prisma.banner.findMany(body),
+      count: await this.prisma.banner.count(),
     };
   }
 
