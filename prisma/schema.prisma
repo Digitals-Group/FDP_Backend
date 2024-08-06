@@ -28,6 +28,7 @@ enum Role {
   ROOT
 }
 
+
 model Banner {
   id        String  @id @default(uuid())
   image     String
@@ -36,4 +37,15 @@ model Banner {
   updatedAt DateTime @updatedAt
 
   @@map("banners")
+
+model Branch {
+  id           String   @id @default(uuid())
+  name         String   @unique()
+  image        String
+  location     String
+  workingHours String
+  phoneNumber  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
 }
