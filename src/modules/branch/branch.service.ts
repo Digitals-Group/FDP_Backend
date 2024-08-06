@@ -5,8 +5,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class BranchService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createBranchDto: Prisma.BranchCreateArgs) {
-    return this.prisma.branch.create(createBranchDto);
+  create(body: Prisma.BranchCreateArgs) {
+    return this.prisma.branch.create(body);
   }
 
   async findAll(body: Prisma.BranchFindManyArgs) {
@@ -28,7 +28,7 @@ export class BranchService {
     return this.prisma.branch.delete({ where: { id } });
   }
 
-  deleteAll(@Body() body: Prisma.BranchDeleteManyArgs) {
+  removeAll(@Body() body: Prisma.BranchDeleteManyArgs) {
     return this.prisma.branch.deleteMany(body);
   }
 }

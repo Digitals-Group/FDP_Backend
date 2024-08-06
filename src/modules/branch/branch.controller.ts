@@ -15,8 +15,8 @@ export class BranchController {
   constructor(private readonly branchService: BranchService) {}
 
   @Post()
-  create(@Body() createBranchDto: Prisma.BranchCreateArgs) {
-    return this.branchService.create(createBranchDto);
+  create(@Body() body: Prisma.BranchCreateArgs) {
+    return this.branchService.create(body);
   }
 
   @Post('/list')
@@ -40,7 +40,7 @@ export class BranchController {
   }
 
   @Post('/delete')
-  deleteAll(@Param() body: Prisma.BranchDeleteManyArgs) {
-    return this.branchService.deleteAll(body);
+  removeAll(@Param() body: Prisma.BranchDeleteManyArgs) {
+    return this.branchService.removeAll(body);
   }
 }
