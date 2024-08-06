@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { BranchModule } from './modules/branch/branch.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -14,6 +15,7 @@ import { UserModule } from './modules/user/user.module';
     RedisModule,
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     MailerModule,
+    BranchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
