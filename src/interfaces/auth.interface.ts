@@ -1,9 +1,5 @@
 import { User } from '@prisma/client';
 
-export interface FormatLogin extends Partial<User> {
-  login: string;
-}
-
 export interface findByPayloadInterface {
   login: string;
 }
@@ -14,5 +10,5 @@ export interface CreateTokenInterface {
 }
 
 export interface LoginInterface extends CreateTokenInterface {
-  data: FormatLogin;
+  data: User;
 }
