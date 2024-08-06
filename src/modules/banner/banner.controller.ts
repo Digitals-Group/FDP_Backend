@@ -15,8 +15,8 @@ export class BannerController {
   constructor(private readonly bannerService: BannerService) {}
 
   @Post()
-  create(@Body() createBannerDto: Prisma.BannerCreateArgs) {
-    return this.bannerService.create(createBannerDto);
+  create(@Body() body: Prisma.BannerCreateArgs) {
+    return this.bannerService.create(body);
   }
 
   @Post('/list')

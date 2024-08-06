@@ -6,8 +6,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class BannerService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createBannerDto: Prisma.BannerCreateArgs) {
-    return this.prisma.banner.create(createBannerDto);
+  create(body: Prisma.BannerCreateArgs) {
+    return this.prisma.banner.create(body);
   }
 
   async findAll(body: Prisma.BannerFindManyArgs) {
