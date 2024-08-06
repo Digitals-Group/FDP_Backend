@@ -4,11 +4,11 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
-import { ProductCategoryModule } from './modules/product-category/product-category.module';
 import { BranchModule } from './modules/branch/branch.module';
+import { DeliveryPriceModule } from './modules/delivery-price/delivery-price.module';
+import { ProductCategoryModule } from './modules/product-category/product-category.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
-import { DeliveryPriceModule } from './modules/delivery-price/delivery-price.module';
 
 @Module({
   imports: [
