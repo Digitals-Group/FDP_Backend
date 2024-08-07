@@ -49,15 +49,11 @@ model ProductCategory {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@map("product_categories")
 }
 
 model Product {
-  id         String @id @default(uuid())
-  categoryId String
   id         String @id @default(uuid())
   categoryId String
 
@@ -69,14 +65,6 @@ model Product {
   image       String?
   discount    Float?
 
-  name        String  @unique
-  price       Float
-  description String?
-  image       String?
-  discount    Float?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -86,17 +74,13 @@ model Product {
 
 model Branch {
   id String @id @default(uuid())
-  id String @id @default(uuid())
 
-  name         String @unique()
   name         String @unique()
   image        String
   location     String
   workingHours String
   phoneNumber  String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
