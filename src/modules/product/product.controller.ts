@@ -19,17 +19,17 @@ export class ProductController {
     return this.productService.create(body);
   }
 
-  @Post('list')
+  @Post('/list')
   findAll(@Body() body: Prisma.ProductFindManyArgs) {
     return this.productService.findAll(body);
   }
 
-  @Post('read')
+  @Post('/read')
   findOne(@Body() body: Prisma.ProductFindUniqueArgs) {
     return this.productService.findOne(body);
   }
 
-  @Patch('update')
+  @Patch('/update')
   update(@Body() body: Prisma.ProductUpdateArgs) {
     return this.productService.update(body);
   }
@@ -39,7 +39,7 @@ export class ProductController {
     return this.productService.remove(id);
   }
 
-  @Post('delete')
+  @Post('/delete')
   removeAll(@Body() body: Prisma.ProductDeleteManyArgs) {
     return this.productService.removeAll(body);
   }
