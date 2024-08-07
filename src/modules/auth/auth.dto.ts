@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { OtpType } from 'src/interfaces/auth.interface';
 
 export class SendSmsDto {
   @IsNotEmpty()
@@ -12,7 +19,15 @@ export class SendMailDto {
 }
 
 export class VerifyOtpDto {
+  @IsEnum(OtpType)
+  type: OtpType;
+
+  @IsEmail()
+  @IsOptional()
+  email: string;
+
   @IsString()
+  @IsOptional()
   phone: string;
 
   @IsString()

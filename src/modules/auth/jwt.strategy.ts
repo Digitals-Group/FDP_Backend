@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { User } from '@prisma/client';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { OtpType } from 'src/interfaces/auth.interface';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -24,5 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 }
 
 export interface JwtPayload {
-  phone: string;
+  phone?: string;
+  email?: string;
+  type: OtpType;
 }
