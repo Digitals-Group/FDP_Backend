@@ -4,10 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
-
 import { BannerModule } from './modules/banner/banner.module';
+import { BranchModule } from './modules/branch/branch.module';
+import { ContactModule } from './modules/contact/contact.module';
 import { ProductCategoryModule } from './modules/product-category/product-category.module';
-
 import { BranchModule } from './modules/branch/branch.module';
 import { DeliveryPriceModule } from './modules/delivery-price/delivery-price.module';
 import { ProductCategoryModule } from './modules/product-category/product-category.module';
@@ -28,6 +28,7 @@ import { UserModule } from './modules/user/user.module';
     BranchModule,
     DeliveryPriceModule,
     ProductModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
