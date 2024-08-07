@@ -14,8 +14,8 @@ export class UserService {
 
   async findAll(body: Prisma.UserFindManyArgs) {
     return {
-      data: this.prisma.user.findMany(body),
-      count: this.prisma.user.count(),
+      data: await this.prisma.user.findMany(body),
+      count: await this.prisma.user.count(),
     };
   }
 
