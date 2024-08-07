@@ -29,6 +29,7 @@ enum Role {
 }
 
 
+
 model Banner {
   id        String  @id @default(uuid())
   image     String
@@ -37,6 +38,32 @@ model Banner {
   updatedAt DateTime @updatedAt
 
   @@map("banners")
+
+model ProductCategory{
+  id            String    @id               @default(uuid())
+  name          String    @unique
+  products      Product[] 
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Product {
+  id              String  @id               @default(uuid())
+  name            String  @unique
+  price           Int
+  description     String?
+  image           String?
+  discount        Int?
+  discountPrice   Int?
+  categoryId      String
+
+  category ProductCategory @relation(fields: [categoryId], references: [id])
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
 
 model Branch {
   id           String   @id @default(uuid())
@@ -49,3 +76,4 @@ model Branch {
   updatedAt    DateTime @updatedAt
 
 }
+
