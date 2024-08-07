@@ -27,4 +27,8 @@ export class DeliveryPriceService {
   remove(id: string) {
     return this.prisma.deliveryPrice.delete({ where: { id } });
   }
+
+  removeAll(body: Prisma.DeliveryPriceDeleteManyArgs) {
+    return this.prisma.deliveryPrice.deleteMany(body);
+  }
 }

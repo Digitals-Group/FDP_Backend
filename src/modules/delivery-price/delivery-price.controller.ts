@@ -19,17 +19,17 @@ export class DeliveryPriceController {
     return this.deliveryPriceService.create(body);
   }
 
-  @Post('list')
+  @Post('/list')
   findAll(@Body() body: Prisma.DeliveryPriceFindManyArgs) {
     return this.deliveryPriceService.findAll(body);
   }
 
-  @Post('read')
+  @Post('/read')
   findOne(@Body() body: Prisma.DeliveryPriceFindUniqueArgs) {
     return this.deliveryPriceService.findOne(body);
   }
 
-  @Patch('update')
+  @Patch('/update')
   update(@Body() body: Prisma.DeliveryPriceUpdateArgs) {
     return this.deliveryPriceService.update(body);
   }
@@ -37,5 +37,9 @@ export class DeliveryPriceController {
   @Delete(':id')
   remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.deliveryPriceService.remove(id);
+  }
+
+  removeAll(@Body() body: Prisma.DeliveryPriceDeleteManyArgs) {
+    return this.deliveryPriceService.removeAll(body);
   }
 }
