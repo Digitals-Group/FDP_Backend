@@ -85,6 +85,7 @@ model Branch {
   @@map("branches")
 }
 
+
 model Contact {
   id String @id @default(uuid())
 
@@ -96,4 +97,14 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   @@map("contacts")
+}
+
+model DeliveryPrice {
+  id           String   @id @default(uuid())
+  price        Float
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("deliver_prices")
 }
