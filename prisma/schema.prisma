@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id            String  @id @default(cuid())
+
   email         String? @unique
   fullName      String
   isAllowedCash Boolean @default(true)
@@ -41,39 +42,50 @@ model Banner {
 
 model ProductCategory{
   id            String    @id               @default(uuid())
+
   name          String    @unique
   products      Product[] 
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@map("product_categories")
 }
 
 model Product {
   id              String  @id               @default(uuid())
-  name            String  @unique
-  price           Int
-  description     String?
-  image           String?
-  discount        Int?
-  discountPrice   Int?
   categoryId      String
 
   category ProductCategory @relation(fields: [categoryId], references: [id])
+  
+  name            String  @unique
+  price           Float
+  description     String?
+  image           String?
+  discount        Float?
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@map("products")
 }
 
 
 model Branch {
   id           String   @id @default(uuid())
+
   name         String   @unique()
   image        String
   location     String
   workingHours String
   phoneNumber  String
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+
+  @@map("branches")
 
 }
 

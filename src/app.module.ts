@@ -7,6 +7,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BannerModule } from './modules/banner/banner.module';
 import { ProductCategoryModule } from './modules/product-category/product-category.module';
 import { BranchModule } from './modules/branch/branch.module';
+import { ProductCategoryModule } from './modules/product-category/product-category.module';
+import { ProductModule } from './modules/product/product.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -20,6 +22,7 @@ import { UserModule } from './modules/user/user.module';
     MailerModule,
     ProductCategoryModule,
     BranchModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
