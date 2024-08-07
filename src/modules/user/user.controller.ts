@@ -2,46 +2,48 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity } from './entities/user.entity';
+import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from './user.service';
 
 @Controller('user')
+@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
-    return this.userService.create(createUserDto);
+  create(@Body() body: Prisma.UserCreateArgs) {
+    return this.userService.create(body);
   }
 
-  @Get()
-  findAll(): Promise<UserEntity[]> {
-    return this.userService.findAll();
+  @Post('/list')
+  findAll(@Body() body: Prisma.UserFindManyArgs) {
+    return this.userService.findAll(body);
   }
 
-  @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.userService.findOne(id);
+  @Post('/read')
+  findOne(@Body() body: Prisma.UserFindUniqueArgs) {
+    return this.userService.findOne(body);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.userService.update(id, updateUserDto);
+  @Patch('/update')
+  update(@Body() body: Prisma.UserUpdateArgs) {
+    return this.userService.update(body);
   }
 
   @Delete(':id')
   remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.userService.remove(id);
+  }
+
+  @Post('/delete')
+  removeAll(@Body() body: Prisma.UserDeleteManyArgs) {
+    return this.userService.removeAll(body);
   }
 }

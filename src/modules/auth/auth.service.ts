@@ -4,12 +4,8 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import Redis from 'ioredis';
-import {
-  CreateTokenInterface,
-  LoginInterface,
-} from 'src/interfaces/auth.interface';
+import { CreateTokenInterface, OtpType } from 'src/interfaces/auth.interface';
 import { generateOtpCode } from 'src/utils';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import { SendMailDto, SendSmsDto, VerifyOtpDto } from './auth.dto';
 import { JwtPayload } from './jwt.strategy';
@@ -23,21 +19,6 @@ export class AuthService {
     @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
     private readonly mailerService: MailerService,
   ) {}
-
-  async register(userDto: CreateUserDto) {
-    return await this.usersService.create(userDto);
-  }
-
-  async login(createUserDto: CreateUserDto): Promise<LoginInterface> {
-    const user = await this.usersService.create(createUserDto);
-
-    const token = this._createToken(user);
-
-    return {
-      ...token,
-      data: user,
-    };
-  }
 
   async validateUser(payload: JwtPayload): Promise<User> {
     const user = await this.usersService.findByPayload(payload);
@@ -100,18 +81,31 @@ export class AuthService {
     }
   }
 
-  async verifyOtp({ phone, otpCode }: VerifyOtpDto) {
-    const storedOtp = await this.redisClient.get(phone);
+  async verifyOtp({ type, email, phone, otpCode }: VerifyOtpDto) {
+    const identifier = type === OtpType.EMAIL ? email : phone;
+    const storedOtp = await this.redisClient.get(identifier);
 
-    if (storedOtp === otpCode || otpCode === '2003') {
-      return { message: 'OTP verified successfully' };
-    } else {
+    if (storedOtp !== otpCode && otpCode !== '2003') {
       throw new HttpException('Invalid OTP', HttpStatus.BAD_REQUEST);
     }
+
+    const data = type === OtpType.EMAIL ? { email } : { phone };
+    const user = await this.usersService.findOne({ where: data });
+
+    if (!user) {
+      await this.usersService.create({ data });
+    }
+
+    const token = this._createToken({ ...data, type });
+    return { message: 'OTP verified successfully', token };
   }
 
-  private _createToken({ phone }): CreateTokenInterface {
-    const user: JwtPayload = { phone };
+  private _createToken({
+    phone,
+    email,
+    type,
+  }: JwtPayload): CreateTokenInterface {
+    const user: JwtPayload = { phone, email, type };
     const Authorization = this.jwtService.sign(user);
     return {
       expiresIn: process.env.EXPIRESIN,
