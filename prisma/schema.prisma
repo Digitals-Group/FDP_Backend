@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id            String  @id @default(cuid())
+  id String @id @default(cuid())
 
   email         String? @unique
   phone         String? @unique
@@ -29,72 +29,71 @@ enum Role {
   ROOT
 }
 
-
-
 model Banner {
-  id        String  @id @default(uuid())
-  image     String
+  id String @id @default(uuid())
+
+  image String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("banners")
+}
 
-model ProductCategory{
-  id            String    @id               @default(uuid())
+model ProductCategory {
+  id String @id @default(uuid())
 
-  name          String    @unique
-  products      Product[] 
+  products Product[]
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  name String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("product_categories")
 }
 
 model Product {
-  id              String  @id               @default(uuid())
-  categoryId      String
+  id         String @id @default(uuid())
+  categoryId String
 
   category ProductCategory @relation(fields: [categoryId], references: [id])
-  
-  name            String  @unique
-  price           Float
-  description     String?
-  image           String?
-  discount        Float?
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  name        String  @unique
+  price       Float
+  description String?
+  image       String?
+  discount    Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([categoryId])
   @@map("products")
 }
 
-
 model Branch {
-  id           String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  name         String   @unique()
+  name         String @unique()
   image        String
   location     String
   workingHours String
   phoneNumber  String
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("branches")
-
 }
 
 model DeliveryPrice {
-  id           String   @id @default(uuid())
-  price        Float
-  
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id String @id @default(uuid())
+
+  price Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("deliver_prices")
 }
