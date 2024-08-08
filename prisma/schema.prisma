@@ -98,3 +98,15 @@ model DeliveryPrice {
   @@map("deliver_prices")
 }
 
+model Contact {
+  id String @id @default(uuid())
+
+  name        String
+  phoneNumber String
+  idea        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contacts")
+}
