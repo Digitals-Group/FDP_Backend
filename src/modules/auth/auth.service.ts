@@ -90,14 +90,14 @@ export class AuthService {
     }
 
     const data = type === OtpType.EMAIL ? { email } : { phone };
-    const user = await this.usersService.findOne({ where: data });
+    let user = await this.usersService.findOne({ where: data });
 
     if (!user) {
-      await this.usersService.create({ data });
+      user = await this.usersService.create({ data });
     }
 
     const token = this._createToken({ ...data, type });
-    return { message: 'OTP verified successfully', token };
+    return { message: 'OTP verified successfully', token, userId: user.id };
   }
 
   private _createToken({

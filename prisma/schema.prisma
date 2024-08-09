@@ -7,26 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id String @id @default(uuid())
-
-  email         String? @unique
-  phone         String? @unique
-  fullName      String?
-  isAllowedCash Boolean @default(true)
-
-  role Role @default(CLIENT)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
+enum OrderStatus {
+  INBASKET
+  ORDERED
+  CANCELED
+  PENDING
 }
 
 enum Role {
   CLIENT
   ADMIN
   ROOT
+}
+
+enum TakeType {
+  DELIVERY
+  TAKEAWAY
+}
+
+enum PaymentType {
+  CASH
+  CARD
+}
+
+model User {
+  id String @id @default(uuid())
+
+  Order Order[]
+  role  Role    @default(CLIENT)
+
+  email         String? @unique
+  phone         String? @unique
+  fullName      String?
+  isAllowedCash Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model Banner {
@@ -57,12 +75,13 @@ model Product {
   id         String @id @default(uuid())
   categoryId String
 
-  category ProductCategory @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+  category   ProductCategory @relation(fields: [categoryId], references: [id])
 
-  name        String  @unique
+  name        String @unique
   price       Float
-  description String?
-  image       String?
+  description String
+  image       String
   discount    Float?
 
   createdAt DateTime @default(now())
@@ -96,6 +115,43 @@ model DeliveryPrice {
   updatedAt DateTime @updatedAt
 
   @@map("deliver_prices")
+}
+
+model Order {
+  id     String @id @default(uuid())
+  userId String
+
+  paymentType PaymentType?
+  takeType    TakeType?
+  status      OrderStatus  @default(INBASKET)
+  user        User         @relation(fields: [userId], references: [id])
+  orderItems  OrderItem[]
+
+  location String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  quantity Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
 }
 
 model Contact {
