@@ -10,8 +10,11 @@ export class OrderItemService {
     return this.prisma.orderItem.create(body);
   }
 
-  findAll(body: Prisma.OrderItemFindManyArgs) {
-    return this.prisma.orderItem.findMany(body);
+  async findAll(body: Prisma.OrderItemFindManyArgs) {
+    return {
+      data: await this.prisma.orderItem.findMany(body),
+      count: await this.prisma.orderItem.count(),
+    };
   }
 
   findOne(body: Prisma.OrderItemFindUniqueArgs) {

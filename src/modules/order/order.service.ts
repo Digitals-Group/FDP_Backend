@@ -9,10 +9,10 @@ export class OrderService {
     return this.prisma.order.create(body);
   }
 
-  findAll(body: Prisma.OrderFindManyArgs) {
+  async findAll(body: Prisma.OrderFindManyArgs) {
     return {
-      data: this.prisma.order.findMany(body),
-      count: this.prisma.order.count(),
+      data: await this.prisma.order.findMany(body),
+      count: await this.prisma.order.count(),
     };
   }
 

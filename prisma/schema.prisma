@@ -34,7 +34,7 @@ model User {
   id String @id @default(uuid())
 
   Order Order[]
-  role Role @default(CLIENT)
+  role  Role    @default(CLIENT)
 
   email         String? @unique
   phone         String? @unique
@@ -75,9 +75,10 @@ model Product {
   id         String @id @default(uuid())
   categoryId String
 
-  category ProductCategory @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+  category   ProductCategory @relation(fields: [categoryId], references: [id])
 
-  name        String  @unique
+  name        String @unique
   price       Float
   description String
   image       String
@@ -88,7 +89,6 @@ model Product {
 
   @@index([categoryId])
   @@map("products")
-  OrderItem OrderItem[]
 }
 
 model Branch {
@@ -117,15 +117,15 @@ model DeliveryPrice {
   @@map("deliver_prices")
 }
 
-model Order{
-  id String @id @default(uuid())
+model Order {
+  id     String @id @default(uuid())
   userId String
 
   paymentType PaymentType?
-  takeType TakeType?
-  status OrderStatus @default(INBASKET)
-  user User @relation(fields: [userId], references: [id])
-  orderItems OrderItem[]
+  takeType    TakeType?
+  status      OrderStatus  @default(INBASKET)
+  user        User         @relation(fields: [userId], references: [id])
+  orderItems  OrderItem[]
 
   location String?
 
@@ -137,11 +137,11 @@ model Order{
 }
 
 model OrderItem {
-  id String @id @default(uuid())
-  orderId String
+  id        String @id @default(uuid())
+  orderId   String
   productId String
 
-  order Order @relation(fields: [orderId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
   product Product @relation(fields: [productId], references: [id])
 
   quantity Int
