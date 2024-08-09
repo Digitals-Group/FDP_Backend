@@ -39,6 +39,7 @@ export class DeliveryPriceController {
     return this.deliveryPriceService.remove(id);
   }
 
+  @Post('/delete')
   removeAll(@Body() body: Prisma.DeliveryPriceDeleteManyArgs) {
     return this.deliveryPriceService.removeAll(body);
   }

@@ -79,8 +79,8 @@ model Product {
 
   name        String  @unique
   price       Float
-  description String?
-  image       String?
+  description String
+  image       String
   discount    Float?
 
   createdAt DateTime @default(now())
@@ -121,13 +121,13 @@ model Order{
   id String @id @default(uuid())
   userId String
 
-  paymentType PaymentType
-  takeType TakeType
+  paymentType PaymentType?
+  takeType TakeType?
   status OrderStatus @default(INBASKET)
   user User @relation(fields: [userId], references: [id])
   orderItems OrderItem[]
 
-  location String
+  location String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

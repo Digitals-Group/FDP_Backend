@@ -12,6 +12,8 @@ import { ProductCategoryModule } from './modules/product-category/product-catego
 import { ProductModule } from './modules/product/product.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { UserModule } from './modules/user/user.module';
+import { OrderModule } from './modules/order/order.module';
+import { OrderItemModule } from './modules/order-item/order-item.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { UserModule } from './modules/user/user.module';
     DeliveryPriceModule,
     ProductModule,
     ContactModule,
+    OrderModule,
+    OrderItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],
