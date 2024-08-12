@@ -6,11 +6,14 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { BranchService } from './branch.service';
 
 @Controller('branch')
+@UseGuards(JwtAuthGuard)
 export class BranchController {
   constructor(private readonly branchService: BranchService) {}
 

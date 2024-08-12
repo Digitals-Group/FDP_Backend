@@ -6,11 +6,14 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ProductCategoryService } from './product-category.service';
 
 @Controller('product-category')
+@UseGuards(JwtAuthGuard)
 export class ProductCategoryController {
   constructor(
     private readonly productCategoryService: ProductCategoryService,

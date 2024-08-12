@@ -6,11 +6,14 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { OrderItemService } from './order-item.service';
 
 @Controller('order-item')
+@UseGuards(JwtAuthGuard)
 export class OrderItemController {
   constructor(private readonly orderItemService: OrderItemService) {}
 

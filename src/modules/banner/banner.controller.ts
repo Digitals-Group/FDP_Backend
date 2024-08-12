@@ -6,11 +6,14 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { BannerService } from './banner.service';
 
 @Controller('banner')
+@UseGuards(JwtAuthGuard)
 export class BannerController {
   constructor(private readonly bannerService: BannerService) {}
 
