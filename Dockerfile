@@ -43,4 +43,4 @@ COPY .env .env
 EXPOSE 1234
 
 # Command to run the application with Prisma migration
-CMD npx prisma migrate dev && node dist/main
+CMD pnpm prisma migrate deploy && node dist/main
