@@ -50,8 +50,8 @@ CREATE TABLE "products" (
     "categoryId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "description" TEXT,
-    "image" TEXT,
+    "description" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "discount" DOUBLE PRECISION,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -87,10 +87,10 @@ CREATE TABLE "deliver_prices" (
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "paymentType" "PaymentType" NOT NULL,
-    "takeType" "TakeType" NOT NULL,
+    "paymentType" "PaymentType",
+    "takeType" "TakeType",
     "status" "OrderStatus" NOT NULL DEFAULT 'INBASKET',
-    "location" TEXT NOT NULL,
+    "location" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -107,6 +107,18 @@ CREATE TABLE "order_items" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "order_items_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "contacts" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "idea" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "contacts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: redis:7
+    restart: always
+    ports:
+      - '6379:6379'
+
+  app:
+    build: .
+    ports:
+      - '1234:1234'
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SECRETKEY: ${SECRETKEY}
+      ESKIZ_USER_EMAIL: ${ESKIZ_USER_EMAIL}
+      ESKIZ_USER_PASSWoRD: ${ESKIZ_USER_PASSWoRD}
+      ESKIZ_USER_TOKEN: ${ESKIZ_USER_TOKEN}
+      REDIS_URL: redis://redis:6379
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    depends_on:
+      - db
+      - redis
+    command: >
+      sh -c "pnpm prisma migrate deploy && node dist/main"
+
+volumes:
+  postgres_data:
