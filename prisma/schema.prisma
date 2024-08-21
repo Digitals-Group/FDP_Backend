@@ -40,6 +40,7 @@ model User {
   phone         String? @unique
   fullName      String?
   isAllowedCash Boolean @default(true)
+  active        Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -50,7 +51,8 @@ model User {
 model Banner {
   id String @id @default(uuid())
 
-  image String
+  image  String
+  active Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,7 +65,8 @@ model ProductCategory {
 
   products Product[]
 
-  name String @unique
+  name   String  @unique
+  active Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,11 +81,12 @@ model Product {
   orderItems OrderItem[]
   category   ProductCategory @relation(fields: [categoryId], references: [id])
 
-  name        String @unique
+  name        String  @unique
   price       Float
   description String
   image       String
   discount    Float?
+  active      Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,11 +98,12 @@ model Product {
 model Branch {
   id String @id @default(uuid())
 
-  name         String @unique()
+  name         String  @unique()
   image        String
   location     String
   workingHours String
   phoneNumber  String
+  active       Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -109,7 +114,8 @@ model Branch {
 model DeliveryPrice {
   id String @id @default(uuid())
 
-  price Float
+  price  Float
+  active Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -128,6 +134,7 @@ model Order {
   orderItems  OrderItem[]
 
   location String?
+  active   Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -145,6 +152,7 @@ model OrderItem {
   product Product @relation(fields: [productId], references: [id])
 
   quantity Int
+  active   Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -160,6 +168,7 @@ model Contact {
   name        String
   phoneNumber String
   idea        String
+  active      Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
