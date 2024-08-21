@@ -13,7 +13,12 @@ export class ProductCategoryService {
   async findAll(body: Prisma.ProductCategoryFindManyArgs) {
     return {
       data: await this.prisma.productCategory.findMany(body),
-      count: await this.prisma.productCategory.count(),
+      activeCount: await this.prisma.productCategory.count({
+        where: { active: true },
+      }),
+      inActiveCount: await this.prisma.productCategory.count({
+        where: { active: false },
+      }),
     };
   }
 

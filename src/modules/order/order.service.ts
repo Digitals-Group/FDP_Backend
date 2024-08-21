@@ -12,7 +12,10 @@ export class OrderService {
   async findAll(body: Prisma.OrderFindManyArgs) {
     return {
       data: await this.prisma.order.findMany(body),
-      count: await this.prisma.order.count(),
+      activeCount: await this.prisma.order.count({ where: { active: true } }),
+      inActiveCount: await this.prisma.order.count({
+        where: { active: false },
+      }),
     };
   }
 

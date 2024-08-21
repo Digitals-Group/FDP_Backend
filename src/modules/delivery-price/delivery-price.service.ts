@@ -12,7 +12,12 @@ export class DeliveryPriceService {
   async findAll(body: Prisma.DeliveryPriceFindManyArgs) {
     return {
       data: await this.prisma.deliveryPrice.findMany(body),
-      count: await this.prisma.deliveryPrice.count(),
+      activeCount: await this.prisma.deliveryPrice.count({
+        where: { active: true },
+      }),
+      inActiveCount: await this.prisma.deliveryPrice.count({
+        where: { active: false },
+      }),
     };
   }
 
