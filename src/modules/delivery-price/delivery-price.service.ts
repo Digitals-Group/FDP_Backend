@@ -13,10 +13,10 @@ export class DeliveryPriceService {
     return {
       data: await this.prisma.deliveryPrice.findMany(body),
       activeCount: await this.prisma.deliveryPrice.count({
-        where: { active: true },
+        where: { active: true, ...body.where },
       }),
       inActiveCount: await this.prisma.deliveryPrice.count({
-        where: { active: false },
+        where: { active: false, ...body.where },
       }),
     };
   }

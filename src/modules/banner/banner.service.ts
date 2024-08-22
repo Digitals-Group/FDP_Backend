@@ -13,9 +13,11 @@ export class BannerService {
   async findAll(body: Prisma.BannerFindManyArgs) {
     return {
       data: await this.prisma.banner.findMany(body),
-      activeCount: await this.prisma.banner.count({ where: { active: true } }),
+      activeCount: await this.prisma.banner.count({
+        where: { active: true, ...body.where },
+      }),
       inActiveCount: await this.prisma.banner.count({
-        where: { active: false },
+        where: { active: false, ...body.where },
       }),
     };
   }

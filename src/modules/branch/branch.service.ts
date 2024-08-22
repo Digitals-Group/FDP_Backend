@@ -13,9 +13,11 @@ export class BranchService {
   async findAll(body: Prisma.BranchFindManyArgs) {
     return {
       data: await this.prisma.branch.findMany(body),
-      activeCount: await this.prisma.branch.count({ where: { active: true } }),
+      activeCount: await this.prisma.branch.count({
+        where: { active: true, ...body.where },
+      }),
       inActiveCount: await this.prisma.branch.count({
-        where: { active: false },
+        where: { active: false, ...body.where },
       }),
     };
   }

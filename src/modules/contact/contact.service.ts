@@ -13,9 +13,11 @@ export class ContactService {
   async findAll(body: Prisma.ContactFindManyArgs) {
     return {
       data: await this.prisma.contact.findMany(body),
-      activeCount: await this.prisma.contact.count({ where: { active: true } }),
+      activeCount: await this.prisma.contact.count({
+        where: { active: true, ...body.where },
+      }),
       inActiveCount: await this.prisma.contact.count({
-        where: { active: false },
+        where: { active: false, ...body.where },
       }),
     };
   }
