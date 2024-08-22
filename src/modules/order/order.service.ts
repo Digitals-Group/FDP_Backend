@@ -13,10 +13,10 @@ export class OrderService {
     return {
       data: await this.prisma.order.findMany(body),
       activeCount: await this.prisma.order.count({
-        where: { active: true, ...body.where },
+        where: { ...body.where, active: true },
       }),
       inActiveCount: await this.prisma.order.count({
-        where: { active: false, ...body.where },
+        where: { ...body.where, active: false },
       }),
     };
   }

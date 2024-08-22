@@ -14,10 +14,10 @@ export class OrderItemService {
     return {
       data: await this.prisma.orderItem.findMany(body),
       activeCount: await this.prisma.orderItem.count({
-        where: { active: true, ...body.where },
+        where: { ...body.where, active: true },
       }),
       inActiveCount: await this.prisma.orderItem.count({
-        where: { active: false, ...body.where },
+        where: { ...body.where, active: false },
       }),
     };
   }

@@ -14,10 +14,10 @@ export class BannerService {
     return {
       data: await this.prisma.banner.findMany(body),
       activeCount: await this.prisma.banner.count({
-        where: { active: true, ...body.where },
+        where: { ...body.where, active: true },
       }),
       inActiveCount: await this.prisma.banner.count({
-        where: { active: false, ...body.where },
+        where: { ...body.where, active: false },
       }),
     };
   }

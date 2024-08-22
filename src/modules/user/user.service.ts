@@ -16,10 +16,10 @@ export class UserService {
     return {
       data: await this.prisma.user.findMany(body),
       activeCount: await this.prisma.user.count({
-        where: { active: true, ...body.where },
+        where: { ...body.where, active: true },
       }),
       inActiveCount: await this.prisma.user.count({
-        where: { active: false, ...body.where },
+        where: { ...body.where, active: false },
       }),
     };
   }

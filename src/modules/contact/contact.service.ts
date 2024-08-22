@@ -14,10 +14,10 @@ export class ContactService {
     return {
       data: await this.prisma.contact.findMany(body),
       activeCount: await this.prisma.contact.count({
-        where: { active: true, ...body.where },
+        where: { ...body.where, active: true },
       }),
       inActiveCount: await this.prisma.contact.count({
-        where: { active: false, ...body.where },
+        where: { ...body.where, active: false },
       }),
     };
   }
